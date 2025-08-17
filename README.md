@@ -6,7 +6,8 @@ This project explores the [Sakila Movie Rental Database](https://dev.mysql.com/d
 
 ---
 
-## 🔍 Questions We Asked  
+## 🔍 Questions We Asked
+
 - Who are the **most valuable customers**, and how much do they contribute to revenue?  
 - Which **genres and films** drive the highest rentals and profits?  
 - How do rentals change over **time** (weekends, months, or seasons)?  
@@ -16,10 +17,9 @@ This project explores the [Sakila Movie Rental Database](https://dev.mysql.com/d
 
 ## 🔍 What We Found  
 
-- The **top 5% of customers** accounted for nearly **20% of total revenue**.  
-- **Family and Animation films** were the most rented, but **Action and Drama** delivered higher **per-rental revenue**.  
-- Rentals spiked by **35% on weekends**, highlighting clear time-based demand.  
-- Customers in **urban areas** rented more than **2× compared to rural** customers.  
+In our analysis, one of the most striking findings was that the **top 5%** of customers were responsible for nearly 20% of the company’s total revenue, showing a highly concentrated customer base that significantly influenced business performance. Looking at genres, we discovered that while Family and Animation films were the most frequently rented, it was Action and Drama that generated higher revenue per rental, suggesting that popularity did not always align with profitability.
+
+Time-based patterns also emerged: rentals spiked by **about 35%** on weekends, pointing to clear demand cycles and opportunities for targeted promotions. Finally, geography played an important role. Customers from urban areas rented more than twice as often as those from rural locations, revealing strong market segmentation that could inform future marketing strategies. 
 
 ---
 
@@ -39,5 +39,5 @@ The Tableau dashboard brings these insights to life:
 
 - **SQL**: joins, aggregations, CTEs, subqueries, and window functions  
 - **Data preparation**: cleaning and transforming datasets for accurate analysis  
-- **Visualization & storytelling**: designing Tableau dashboards that translate numbers into insights  
+- **Visualization**: designing Tableau dashboards that translate numbers into insights  
 - **Business recommendations**: turning data into actionable strategies for revenue growth
