@@ -1,43 +1,270 @@
-# 🎬 Movie Rental Analytics  
+# Building a Reusable Analytics Layer with dbt
 
-Imagine managing a bustling DVD rental store and trying to understand **which movies keep customers coming back**, **who your most loyal customers are**, and **where the business makes the most money**.  
+## Overview
 
-This project explores the [Sakila Movie Rental Database](https://dev.mysql.com/doc/sakila/en/) — a fictional dataset of films, customers, rentals, and payments — and turns it into a **business intelligence story** through **SQL analysis** and **Tableau dashboards**.  
+Most business data originates from operational systems that are optimized for transactions rather than analytics. As a result, answering common business questions often requires repeatedly rebuilding the same joins, aggregations, and business logic.
 
----
-
-## 🔍 Questions We Asked
-
-- Who are the **most valuable customers**, and how much do they contribute to revenue?  
-- Which **genres and films** drive the highest rentals and profits?  
-- How do rentals change over **time** (weekends, months, or seasons)?  
-- Does **customer location** influence what people watch?   
+In this project, I used **MySQL** and **dbt** to transform a raw movie rental dataset ([Sakila Movie Rental Database](https://dev.mysql.com/doc/sakila/en/)) containing **15,986 rental transactions and 599 customers** into a reusable analytics layer. The objective was not simply to answer a single business question, but to create scalable analytical assets that support customer, revenue, and demand analysis.
 
 ---
 
-## 🔍 What We Found  
+## Business Problem
 
-In our analysis, one of the most striking findings was that the **top 5%** of customers were responsible for nearly 20% of the company’s total revenue, showing a highly concentrated customer base that significantly influenced business performance. Looking at genres, we discovered that while Family and Animation films were the most frequently rented, it was Action and Drama that generated higher revenue per rental, suggesting that popularity did not always align with profitability.
+The raw transactional dataset contained customer activity, rental events, film information, and revenue data at the transaction level.
 
-Time-based patterns also emerged: rentals spiked by **about 35%** on weekends, pointing to clear demand cycles and opportunities for targeted promotions. Finally, geography played an important role. Customers from urban areas rented more than twice as often as those from rural locations, revealing strong market segmentation that could inform future marketing strategies. 
+While suitable for operational processes, the structure made it difficult to efficiently answer questions such as:
 
----
+- Who are the highest-value customers?
+- Which categories contribute the most revenue?
+- How does demand vary across categories and time periods?
+- How can business metrics be standardized and reused across analyses?
 
-## 🖥️ Dashboards  
-
-The Tableau dashboard brings these insights to life:  
-
-- 📊 **Customer segments** by spending and rental frequency  
-- 🎭 **Genre profitability** heatmaps to compare revenue performance  
-- ⏰ **Rental activity trends** across days and weeks  
-
-![Dashboard Sample](Dashboard_Sample.jpg) 
+Without a modeling layer, analysts would need to repeatedly rebuild the same logic for every new report or dashboard.
 
 ---
 
-## 🚀 Skills Demonstrated  
+## Solution Architecture
 
-- **SQL**: joins, aggregations, CTEs, subqueries, and window functions  
-- **Data preparation**: cleaning and transforming datasets for accurate analysis  
-- **Visualization**: designing Tableau dashboards that translate numbers into insights  
-- **Business recommendations**: turning data into actionable strategies for revenue growth
+### Analytics Engineering Workflow
+
+> 📌 Insert Architecture Diagram Here
+
+Recommended file:
+
+```text
+docs/dbt_architecture.png
+```
+
+The project follows a layered analytics architecture:
+
+```text
+Raw Data
+    ↓
+Staging Layer
+    ↓
+Business Data Marts
+    ↓
+Business Insights
+```
+
+### Data Flow
+
+```text
+raw_customer_film_analytics
+            ↓
+stg_customer_film_analytics
+            ↓
+ ┌──────────┼──────────┐
+ │          │          │
+ ↓          ↓          ↓
+
+mart_customer_ltv
+mart_category_revenue
+mart_seasonal_demand
+```
+
+---
+
+## Data Overview
+
+### Source Dataset
+
+The source dataset contains rental transaction activity for a DVD rental business.
+
+Key attributes include:
+
+- Customer information
+- Film information
+- Film category
+- Rental activity
+- Revenue metrics
+- Rental month
+
+### Scale
+
+| Metric | Value |
+|----------|----------|
+| Transactions | 15,986 |
+| Customers | 599 |
+| Categories | 16 |
+| Data Source | MySQL |
+
+---
+
+## What I Built
+
+### 1. Staging Layer
+
+Model:
+
+```text
+stg_customer_film_analytics
+```
+
+Purpose:
+
+- Standardize source fields
+- Create a consistent analytical foundation
+- Separate raw operational data from business logic
+
+---
+
+### 2. Customer Lifetime Value Mart
+
+Model:
+
+```text
+mart_customer_ltv
+```
+
+Business Questions:
+
+- Who are the highest-value customers?
+- How engaged are they with the platform?
+
+Key Metrics:
+
+- Customer Lifetime Value (LTV)
+- Total Rentals
+- Films Watched
+- Categories Watched
+- Average Spend per Rental
+
+Example Output:
+
+> 📌 Insert Screenshot Here
+
+Recommended file:
+
+```text
+docs/customer_ltv_mart.png
+```
+
+---
+
+### 3. Revenue Performance Mart
+
+Model:
+
+```text
+mart_category_revenue
+```
+
+Business Questions:
+
+- Which categories drive the most revenue?
+- How concentrated is revenue across categories?
+
+Key Metrics:
+
+- Total Revenue
+- Rental Volume
+- Revenue per Rental
+- Film Count
+
+Example Output:
+
+> 📌 Insert Screenshot Here
+
+Recommended file:
+
+```text
+docs/category_revenue_mart.png
+```
+
+---
+
+### 4. Seasonal Demand Mart
+
+Model:
+
+```text
+mart_seasonal_demand
+```
+
+Business Questions:
+
+- How does demand change over time?
+- Which categories perform best during different periods?
+
+Key Metrics:
+
+- Active Customers
+- Rental Volume
+- Monthly Revenue
+
+Example Output:
+
+> 📌 Insert Screenshot Here
+
+Recommended file:
+
+```text
+docs/seasonal_demand_mart.png
+```
+
+---
+
+## Key Findings
+
+### Revenue Concentration
+
+Revenue was concentrated among a subset of film categories.
+
+Top-performing categories included:
+
+- Sports
+- Sci-Fi
+- Animation
+
+### Customer Value Differences
+
+Customer lifetime value varied significantly across the customer base, suggesting opportunities for customer segmentation and retention-focused analysis.
+
+### Demand Patterns
+
+Rental activity showed meaningful variation across months and categories, indicating seasonal demand behavior that could influence future inventory and pricing decisions.
+
+---
+
+## Business Impact
+
+This project mirrors a common analytics engineering workflow: **Raw Data → dbt Models → Business Marts → Insights**, and demonstrates how dbt can be used to transform operational data into scalable analytics infrastructure.
+
+To be specific, the project created a reusable analytics layer that:
+
+- Centralizes business logic
+- Standardizes metric definitions
+- Reduces repeated SQL development
+- Supports future reporting and analysis
+
+---
+
+## Repository Structure
+
+```text
+movie-analytics-dbt/
+│
+├── models/
+│   ├── staging/
+│   │   └── stg_customer_film_analytics.sql
+│   │
+│   └── marts/
+│       ├── mart_customer_ltv.sql
+│       ├── mart_category_revenue.sql
+│       └── mart_seasonal_demand.sql
+│
+├── docs/
+│   ├── dbt_architecture.png
+│   ├── customer_ltv_mart.png
+│   ├── category_revenue_mart.png
+│   └── seasonal_demand_mart.png
+│
+└── README.md
+```
+
+---
+
+## Technology Stack
+
+**MySQL · SQL · dbt · Data Modeling · Analytics Engineering**
