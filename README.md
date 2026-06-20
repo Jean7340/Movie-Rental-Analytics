@@ -27,15 +27,13 @@ Without a modeling layer, analysts would need to repeatedly rebuild the same log
 
 ### Analytics Engineering Workflow
 
-> 📌 Insert Architecture Diagram Here
+## Solution Architecture
 
-Recommended file:
+<p align="center">
+  <img src="docs/dbt_architecture.png" width="850">
+</p>
 
-```text
-docs/dbt_architecture.png
-```
-
-The project follows a layered analytics architecture:
+The project follows a layered analytics architecture that transforms raw transactional data into reusable business-ready analytics assets.
 
 ```text
 Raw Data
@@ -132,13 +130,9 @@ Key Metrics:
 
 Example Output:
 
-> 📌 Insert Screenshot Here
-
-Recommended file:
-
-```text
-docs/customer_ltv_mart.png
-```
+<p align="center">
+  <img src="docs/customer_ltv_mart.png" width="900">
+</p>
 
 ---
 
@@ -164,13 +158,9 @@ Key Metrics:
 
 Example Output:
 
-> 📌 Insert Screenshot Here
-
-Recommended file:
-
-```text
-docs/category_revenue_mart.png
-```
+<p align="center">
+  <img src="docs/category_revenue_mart.png" width="900">
+</p>
 
 ---
 
@@ -195,13 +185,9 @@ Key Metrics:
 
 Example Output:
 
-> 📌 Insert Screenshot Here
-
-Recommended file:
-
-```text
-docs/seasonal_demand_mart.png
-```
+<p align="center">
+  <img src="docs/seasonal_demand_mart.png" width="900">
+</p>
 
 ---
 
