@@ -25,10 +25,6 @@ Without a modeling layer, analysts would need to repeatedly rebuild the same log
 
 ## Solution Architecture
 
-### Analytics Engineering Workflow
-
-## Solution Architecture
-
 <p align="center">
   <img src="docs/dbt_architecture.png" width="850">
 </p>
@@ -86,6 +82,14 @@ Key attributes include:
 | Customers | 599 |
 | Categories | 16 |
 | Data Source | MySQL |
+
+### Grain Transformation
+
+The project transforms rental transaction records into multiple business-oriented analytical grains. Each mart is designed around a specific business question, enabling reusable reporting and analysis without repeatedly querying raw transaction data.
+
+<p align="center">
+  <img src="docs/grain_transformation.png" width="1100">
+</p>
 
 ---
 
@@ -245,6 +249,7 @@ movie-analytics-dbt/
 │   ├── customer_ltv_mart.png
 │   ├── category_revenue_mart.png
 │   └── seasonal_demand_mart.png
+│   └── Grain Transformation Diagram
 │
 └── README.md
 ```
