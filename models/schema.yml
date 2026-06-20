@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: stg_customer_film_analytics
+    description: Standardized staging layer for customer rental activity.
+
+  - name: mart_customer_ltv
+    description: Customer-level mart supporting lifetime value analysis.
+
+  - name: mart_category_revenue
+    description: Category-level mart supporting revenue concentration analysis.
+
+  - name: mart_seasonal_demand
+    description: Month-by-category mart supporting seasonal demand analysis.
