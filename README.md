@@ -1,4 +1,4 @@
-# Building a Reusable Analytics Layer with dbt
+# Modern Data Stack for Customer Analytics
 
 ## Overview
 
